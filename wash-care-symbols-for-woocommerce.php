@@ -19,7 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WashCareSymbolsForWooCommerce {
 	public array $values;
-	public array $images;
 
 	public function __construct() {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
@@ -141,10 +140,6 @@ class WashCareSymbolsForWooCommerce {
 		$this->values = apply_filters( 'wcsfw-data', $this->values );
 	}
 
-	public function enqueue_scripts() {
-		wp_enqueue_script( 'wcsfw-admin', plugin_dir_url( __FILE__ ) . 'assets/js/admin.js', [ 'wc-enhanced-select' ] );
-	}
-
 	public function enqueue_styles() {
 		wp_enqueue_style( 'wcsfw-microtip', plugin_dir_url( __FILE__ ) . 'assets/css/vendor/microtip.css' );
 		wp_enqueue_style( 'wcsfw-main', plugin_dir_url( __FILE__ ) . 'assets/css/wcsfw.css' );
@@ -172,7 +167,6 @@ class WashCareSymbolsForWooCommerce {
 	 * Content of Wash / Care tab in admin
 	 */
 	public function wash_care_tab_content() {
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		?>
         <div id="wash_care_tab_content" class="panel woocommerce_options_panel">
 			<?php $this->get_fields(); ?>
