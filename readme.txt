@@ -19,42 +19,88 @@ Display wash/care symbols in WooCommerce products.
 
 For now, these choices are available:
 
-* Wash
-    * Machine wash
-    * Hand wash
+* Washing:
+    * Machine wash, gentle / delicate
+    * Machine wash, permanent press / wrinkle resistant
+    * Machine wash, regular / normal
     * Do not wash
+    * Hand wash only
+    * Machine wash, gentle / delicate, 30 degrees C (85 degrees F)
+    * Machine wash, permanent press / wrinkle resistant, 30 degrees C (85 degrees F)
+    * Machine was h, regular / normal, 30 degrees C (85 degrees F)
+    * Machine wash, gentle / delicate, 40 degrees C (105 degrees F)
+    * Machine wash, permanent press, 40 degrees C (105 degrees F)
+    * Machine wash, regular / normal, 40 degrees C (105 degrees F)
+    * Machine wash, gentle / delicate, 50 degrees C (120 degrees F)
+    * Machine wash, permanent press, 50 degrees C (120 degrees F)
+    * Machine wash, regular / normal, 50 degrees C (120 degrees F)
+    * Machine wash, gentle / delicate, 60 degrees C (140 degrees F)
+    * Machine wash, permanent press, 60 degrees C (140 degrees F)
+    * Machine wash, regular / normal, 60 degrees C (140 degrees F)
+    * Machine wash, gentle / delicate, 70 degrees C (160 degrees F)
+    * Machine wash, permanent press, 70 degrees C (160 degrees F)
+    * Machine wash, regular / normal, 70 degrees C (160 degrees F)
+    * Machine wash, gentle / delicate, 95 degrees C (200 degrees F)
+    * Machine wash, permanent press, 95 degrees C (200 degrees F)
+    * Machine wash, regular / normal, 95 degrees C (200 degrees F)
+    * Hand wash, 30 degrees C (85 degrees F)
+    * Hand wash, 40 degrees C (105 degrees F)
+    * Hand wash, 50 degrees C (120 degrees F)
 
-* Washing Temperature
-    * Machine wash cold, 75F/30C
-    * Machine wash warm, 105F/40C
-    * Machine wash hot, 120F/50C
-    * Machine wash hot, 140F/60C
-    * Machine wash hot, 160F/70C
-    * Machine wash hot, 200F/95C
+* Drying:
+    * Tumble dry, normal
+    * Tumble dry, normal, low heat
+    * Tumble dry, normal, medium heat
+    * Tumble dry, normal, high heat
+    * Tumble dry, normal, no heat
+    * Tumble dry, permanent press
+    * Tumble dry, permanent press, low heat
+    * Tumble dry, permanent press, medium heat
+    * Tumble dry, permanent press, high heat
+    * Tumble dry, gentle
+    * Tumble dry, gentle, low heat
+    * Tumble dry, gentle, medium heat
+    * Tumble dry, gentle, high heat
+    * Tumble dry, permanent press, no heat
+    * Line dry
+    * Drip dry
+    * Dry flat
+    * Dry in shade
+    * Do not dry
+    * Line dry in shade
+    * Drip dry in shade
+    * Dry flat in shade
     
-* Wash Cycle
-    * Delicate cycle
+* Ironing:
+    * Ironing required
+    * Iron, low temperature
+    * Iron, medium temperature
+    * Iron, high temperature
+    * Do not iron
+    * Iron, no steam
+    * Iron, no steam, low temperature
+    * Iron, no steam, medium temperature
+    * Iron, no steam, high temperature
     
-* Bleach
-    * Bleach
-    * Do not bleach
-    * Non-chlorine bleach only
-
-* Dry
-    * Dry
-    * Tumble dry, low heat
-    * Tumble dry, medium heat
-    * Tumble dry, high heat
-    * Do not dry!
-    * Do not tumble dry
-    
-* Iron
-    * Iron
-    * Do not iron!
-    
-* Dry clean
+* Dry cleaning:
     * Dry clean
-    * Do not dry clean!
+    * Dry clean, any solvent
+    * Dry clean, petroleum based solvent only
+    * Dry clean, any solvent other than trichloroethylene
+    * Do not dry clean
+    * Dry clean, short cycle
+    * Dry clean, low moisture
+    * Dry clean, low heat
+    * Dry clean, no steam
+    * Dry clean, any solvent, short cycle
+    * Dry clean, any solvent, low moisture
+    * Dry clean, any solvent, low heat
+    * Dry clean, any solvent, no steam
+    
+* Bleaching:
+    * Use any bleach
+    * Use only non-chlorine bleach
+    * Do not bleach
 
 = Resources =
 

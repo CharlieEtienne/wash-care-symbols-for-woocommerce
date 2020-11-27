@@ -32,7 +32,7 @@ class WashCareSymbolsForWooCommerce {
 		 * Multidimensional array with all the choices, labels, and all necessary informations for the fields
 		 */
 		$this->values = [
-			'wcsfw_washing'   => [
+			'wcsfw_washing'      => [
 				'label'       => __( 'Washing', 'wcsfw' ),
 				'description' => __( 'Washing', 'wcsfw' ),
 				'choices'     => [
@@ -65,7 +65,7 @@ class WashCareSymbolsForWooCommerce {
 
 				],
 			],
-			'wcsfw_drying'    => [
+			'wcsfw_drying'       => [
 				'label'       => __( 'Drying', 'wcsfw' ),
 				'description' => __( 'Drying', 'wcsfw' ),
 				'choices'     => [
@@ -93,7 +93,7 @@ class WashCareSymbolsForWooCommerce {
 					'drying_22' => __( 'Dry flat in shade', 'wcsfw' ),
 				],
 			],
-			'wcsfw_ironing'   => [
+			'wcsfw_ironing'      => [
 				'label'       => __( 'Ironing', 'wcsfw' ),
 				'description' => __( 'Ironing', 'wcsfw' ),
 				'choices'     => [
@@ -131,9 +131,9 @@ class WashCareSymbolsForWooCommerce {
 				'label'       => __( 'Bleaching', 'wcsfw' ),
 				'description' => __( 'Bleaching', 'wcsfw' ),
 				'choices'     => [
-					'bleaching_1' => __('Use any bleach', 'wcsfw'),
-                    'bleaching_2' => __('Use only non-chlorine bleach', 'wcsfw'),
-                    'bleaching_3' => __('Do not bleach', 'wcsfw'),
+					'bleaching_1' => __( 'Use any bleach', 'wcsfw' ),
+					'bleaching_2' => __( 'Use only non-chlorine bleach', 'wcsfw' ),
+					'bleaching_3' => __( 'Do not bleach', 'wcsfw' ),
 				],
 			],
 		];
@@ -216,7 +216,7 @@ class WashCareSymbolsForWooCommerce {
 				echo '<th class="wcsfw-title">' . $field[ 'label' ] . '</th>';
 				echo '<td class="wcsfw-symbols-container">';
 				foreach ( $choices as $choice ) {
-					echo '<button aria-label="' . $field[ 'choices' ][ $choice ] . '" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
+					echo '<button aria-label="' . $field[ 'choices' ][ $choice ] . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
 					echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
 					echo '</button>';
 				}
