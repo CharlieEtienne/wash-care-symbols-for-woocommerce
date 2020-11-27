@@ -200,7 +200,13 @@ class WashCareSymbolsForWooCommerce {
 	 */
 	public function save_fields( $post_id ) {
 		foreach ( $this->values as $fieldkey => $field ) {
-			update_post_meta( $post_id, '_' . $fieldkey, sanitize_key( $_POST[ '_' . $fieldkey ] ) ?? null );
+		    if (isset( $_POST[ '_' . $fieldkey ] ) && is_array( $_POST[ '_' . $fieldkey ] )) {
+			    $clean_values = [];
+			    foreach ( $_POST[ '_' . $fieldkey ] as $item ) {
+                    $clean_values[] = sanitize_key( $item );
+			    }
+			    update_post_meta( $post_id, '_' . $fieldkey, $clean_values ?? null );
+		    }
 		}
 	}
 
