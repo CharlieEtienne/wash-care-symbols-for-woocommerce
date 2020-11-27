@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Wash Care Symbols for WooCommerce
  * Description:       Display wash/care symbols in WooCommerce products
- * Version:           2.1.4
+ * Version:           2.1.5
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Charlie Etienne
@@ -43,7 +43,7 @@ class WashCareSymbolsForWooCommerce {
 					'wash_5'  => __( 'Hand wash only', 'wcsfw' ),
 					'wash_6'  => __( 'Machine wash, gentle / delicate, 30 degrees C (85 degrees F)', 'wcsfw' ),
 					'wash_7'  => __( 'Machine wash, permanent press / wrinkle resistant, 30 degrees C (85 degrees F)', 'wcsfw' ),
-					'wash_8'  => __( 'Machine was h, regular / normal, 30 degrees C (85 degrees F)', 'wcsfw' ),
+					'wash_8'  => __( 'Machine wash, regular / normal, 30 degrees C (85 degrees F)', 'wcsfw' ),
 					'wash_9'  => __( 'Machine wash, gentle / delicate, 40 degrees C (105 degrees F)', 'wcsfw' ),
 					'wash_10' => __( 'Machine wash, permanent press, 40 degrees C (105 degrees F)', 'wcsfw' ),
 					'wash_11' => __( 'Machine wash, regular / normal, 40 degrees C (105 degrees F)', 'wcsfw' ),

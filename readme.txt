@@ -1,7 +1,7 @@
 === Wash Care Symbols for WooCommerce ===
 Contributors: charlieetienne
 Tags: woocommerce, wash, care, symbols, clothes
-Stable tag: 2.1.4
+Stable tag: 2.1.5
 Requires at least: 5.2
 Tested up to: 5.6
 Requires PHP: 7.2
@@ -27,7 +27,7 @@ For now, these choices are available:
     * Hand wash only
     * Machine wash, gentle / delicate, 30 degrees C (85 degrees F)
     * Machine wash, permanent press / wrinkle resistant, 30 degrees C (85 degrees F)
-    * Machine was h, regular / normal, 30 degrees C (85 degrees F)
+    * Machine wash, regular / normal, 30 degrees C (85 degrees F)
     * Machine wash, gentle / delicate, 40 degrees C (105 degrees F)
     * Machine wash, permanent press, 40 degrees C (105 degrees F)
     * Machine wash, regular / normal, 40 degrees C (105 degrees F)
