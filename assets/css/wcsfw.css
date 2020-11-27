@@ -2,14 +2,14 @@
     width: 180px;
 }
 .wcsfw-symbol-btn {
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
+    background: none !important;
+    color: inherit !important;
+    border: none !important;
+    padding: 0 !important;
+    font: inherit !important;
+    cursor: pointer !important;
+    outline: inherit !important;
 }
 .wcsfw-symbol-img {
-    height: 34px;
+    height: 38px;
 }
