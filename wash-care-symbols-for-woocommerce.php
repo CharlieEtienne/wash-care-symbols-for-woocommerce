@@ -108,9 +108,9 @@ class WashCareSymbolsForWooCommerce {
 					'ironing_9' => __( 'Iron, no steam, high temperature', 'wcsfw' ),
 				],
 			],
-			'wcsfw_dry_clean' => [
-				'label'       => __( 'Dry clean', 'wcsfw' ),
-				'description' => __( 'Dry clean', 'wcsfw' ),
+			'wcsfw_dry_cleaning' => [
+				'label'       => __( 'Dry cleaning', 'wcsfw' ),
+				'description' => __( 'Dry cleaning', 'wcsfw' ),
 				'choices'     => [
 					'dry_cleaning_1'  => __( 'Dry clean', 'wcsfw' ),
 					'dry_cleaning_2'  => __( 'Dry clean, any solvent', 'wcsfw' ),
