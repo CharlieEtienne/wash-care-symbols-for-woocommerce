@@ -1,0 +1,351 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Wash Care Symbols for WooCommerce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-29 22:18+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.4.6; wp-5.6-RC1-49706"
+
+#: wash-care-symbols-for-woocommerce.php:131
+#: wash-care-symbols-for-woocommerce.php:132
+msgid "Bleaching"
+msgstr ""
+
+#. Description of the plugin
+msgid "Display wash/care symbols in WooCommerce products"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:136
+msgid "Do not bleach"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:90
+msgid "Do not dry"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:119
+msgid "Do not dry clean"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:104
+msgid "Do not iron"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:42
+msgid "Do not wash"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:87
+msgid "Drip dry"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:92
+msgid "Drip dry in shade"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:115
+msgid "Dry clean"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:116
+msgid "Dry clean, any solvent"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:118
+msgid "Dry clean, any solvent other than trichloroethylene"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:126
+msgid "Dry clean, any solvent, low heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:125
+msgid "Dry clean, any solvent, low moisture"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:127
+msgid "Dry clean, any solvent, no steam"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:124
+msgid "Dry clean, any solvent, short cycle"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:122
+msgid "Dry clean, low heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:121
+msgid "Dry clean, low moisture"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:123
+msgid "Dry clean, no steam"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:117
+msgid "Dry clean, petroleum based solvent only"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:120
+msgid "Dry clean, short cycle"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:112
+#: wash-care-symbols-for-woocommerce.php:113
+msgid "Dry cleaning"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:88
+msgid "Dry flat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:93
+msgid "Dry flat in shade"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:89
+msgid "Dry in shade"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:69
+#: wash-care-symbols-for-woocommerce.php:70
+msgid "Drying"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:43
+msgid "Hand wash only"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:62
+msgid "Hand wash, 30 degrees C (85 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:63
+msgid "Hand wash, 40 degrees C (105 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:64
+msgid "Hand wash, 50 degrees C (120 degrees F)"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://web-nancy.fr"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:103
+msgid "Iron, high temperature"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:101
+msgid "Iron, low temperature"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:102
+msgid "Iron, medium temperature"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:105
+msgid "Iron, no steam"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:108
+msgid "Iron, no steam, high temperature"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:106
+msgid "Iron, no steam, low temperature"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:107
+msgid "Iron, no steam, medium temperature"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:97
+#: wash-care-symbols-for-woocommerce.php:98
+msgid "Ironing"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:100
+msgid "Ironing required"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:86
+msgid "Line dry"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:91
+msgid "Line dry in shade"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:39
+msgid "Machine wash, gentle / delicate"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:44
+msgid "Machine wash, gentle / delicate, 30 degrees C (85 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:47
+msgid "Machine wash, gentle / delicate, 40 degrees C (105 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:50
+msgid "Machine wash, gentle / delicate, 50 degrees C (120 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:53
+msgid "Machine wash, gentle / delicate, 60 degrees C (140 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:56
+msgid "Machine wash, gentle / delicate, 70 degrees C (160 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:59
+msgid "Machine wash, gentle / delicate, 95 degrees C (200 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:40
+msgid "Machine wash, permanent press / wrinkle resistant"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:45
+msgid ""
+"Machine wash, permanent press / wrinkle resistant, 30 degrees C (85 degrees "
+"F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:48
+msgid "Machine wash, permanent press, 40 degrees C (105 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:51
+msgid "Machine wash, permanent press, 50 degrees C (120 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:54
+msgid "Machine wash, permanent press, 60 degrees C (140 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:57
+msgid "Machine wash, permanent press, 70 degrees C (160 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:60
+msgid "Machine wash, permanent press, 95 degrees C (200 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:41
+msgid "Machine wash, regular / normal"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:46
+msgid "Machine wash, regular / normal, 30 degrees C (85 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:49
+msgid "Machine wash, regular / normal, 40 degrees C (105 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:52
+msgid "Machine wash, regular / normal, 50 degrees C (120 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:55
+msgid "Machine wash, regular / normal, 60 degrees C (140 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:58
+msgid "Machine wash, regular / normal, 70 degrees C (160 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:61
+msgid "Machine wash, regular / normal, 95 degrees C (200 degrees F)"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:81
+msgid "Tumble dry, gentle"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:84
+msgid "Tumble dry, gentle, high heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:82
+msgid "Tumble dry, gentle, low heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:83
+msgid "Tumble dry, gentle, medium heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:72
+msgid "Tumble dry, normal"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:75
+msgid "Tumble dry, normal, high heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:73
+msgid "Tumble dry, normal, low heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:74
+msgid "Tumble dry, normal, medium heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:76
+msgid "Tumble dry, normal, no heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:77
+msgid "Tumble dry, permanent press"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:80
+msgid "Tumble dry, permanent press, high heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:78
+msgid "Tumble dry, permanent press, low heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:79
+msgid "Tumble dry, permanent press, medium heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:85
+msgid "Tumble dry, permanent press, no heat"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:134
+msgid "Use any bleach"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:135
+msgid "Use only non-chlorine bleach"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:157
+msgid "Wash / Care"
+msgstr ""
+
+#. Name of the plugin
+msgid "Wash Care Symbols for WooCommerce"
+msgstr ""
+
+#: wash-care-symbols-for-woocommerce.php:36
+#: wash-care-symbols-for-woocommerce.php:37
+msgid "Washing"
+msgstr ""

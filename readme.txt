@@ -1,7 +1,7 @@
 === Wash Care Symbols for WooCommerce ===
 Contributors: charlieetienne
 Tags: woocommerce, wash, care, symbols, clothes
-Stable tag: 2.1.5
+Stable tag: 2.1.6
 Requires at least: 5.2
 Tested up to: 5.6
 Requires PHP: 7.2

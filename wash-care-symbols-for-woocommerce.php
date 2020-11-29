@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Wash Care Symbols for WooCommerce
  * Description:       Display wash/care symbols in WooCommerce products
- * Version:           2.1.5
+ * Version:           2.1.6
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Charlie Etienne
@@ -21,6 +21,7 @@ class WashCareSymbolsForWooCommerce {
 	public array $values;
 
 	public function __construct() {
+		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
 		add_filter( 'woocommerce_product_tabs', [ $this, 'force_tab_to_display' ], 98 );
 		add_filter( 'woocommerce_product_data_tabs', [ $this, 'wash_care_tab' ], 10, 1 );
@@ -138,6 +139,13 @@ class WashCareSymbolsForWooCommerce {
 			],
 		];
 		$this->values = apply_filters( 'wcsfw-data', $this->values );
+	}
+
+	/**
+	 * Loads plugin's translated strings.
+	 */
+	public function load_plugin_textdomain() {
+		load_plugin_textdomain( 'wcsfw', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 
 	public function enqueue_styles() {
