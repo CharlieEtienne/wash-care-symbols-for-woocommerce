@@ -1,16 +1,18 @@
 <?php
 /**
- * Plugin Name:       Wash Care Symbols for WooCommerce
- * Description:       Display wash/care symbols in WooCommerce products
- * Version:           2.1.7
- * Requires at least: 5.2
- * Requires PHP:      7.2
- * Author:            Charlie Etienne
- * Author URI:        https://web-nancy.fr
- * License:           GPL v2 or later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       wash-care-symbols-for-woocommerce
- * Domain Path:       /languages
+ * Plugin Name:             Wash Care Symbols for WooCommerce
+ * Description:             Display wash/care symbols in WooCommerce products
+ * Version:                 2.1.8
+ * Requires at least:       5.2
+ * Requires PHP:            7.2
+ * WC requires at least:    4.0
+ * WC tested up to:         5.0
+ * Author:                  Charlie Etienne
+ * Author URI:              https://web-nancy.fr
+ * License:                 GPL v2 or later
+ * License URI:             https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:             wash-care-symbols-for-woocommerce
+ * Domain Path:             /languages
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -208,13 +210,15 @@ class WashCareSymbolsForWooCommerce {
 	 */
 	public function save_fields( $post_id ) {
 		foreach ( $this->values as $fieldkey => $field ) {
-		    if (isset( $_POST[ '_' . $fieldkey ] ) && is_array( $_POST[ '_' . $fieldkey ] )) {
-			    $clean_values = [];
-			    foreach ( $_POST[ '_' . $fieldkey ] as $item ) {
-                    $clean_values[] = sanitize_key( $item );
-			    }
-			    update_post_meta( $post_id, '_' . $fieldkey, $clean_values ?? null );
-		    }
+			if ( isset( $_POST[ '_' . $fieldkey ] ) && is_array( $_POST[ '_' . $fieldkey ] ) ) {
+				$clean_values = [];
+				foreach ( $_POST[ '_' . $fieldkey ] as $item ) {
+					$clean_values[] = sanitize_key( $item );
+				}
+				update_post_meta( $post_id, '_' . $fieldkey, $clean_values ?? null );
+			} else {
+				delete_post_meta( $post_id, '_' . $fieldkey );
+			}
 		}
 	}
 
