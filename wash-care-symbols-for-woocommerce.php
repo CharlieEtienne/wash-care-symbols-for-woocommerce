@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class WashCareSymbolsForWooCommerce {
-	public array $values;
+	public $values;
 
 	public function __construct() {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
