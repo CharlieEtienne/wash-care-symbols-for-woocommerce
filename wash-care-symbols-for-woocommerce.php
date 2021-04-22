@@ -2,7 +2,7 @@
 /**
  * Plugin Name:             Wash Care Symbols for WooCommerce
  * Description:             Display wash/care symbols in WooCommerce products
- * Version:                 2.1.8
+ * Version:                 2.1.9
  * Requires at least:       5.2
  * Requires PHP:            7.2
  * WC requires at least:    4.0
