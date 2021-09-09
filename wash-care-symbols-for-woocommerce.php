@@ -2,11 +2,11 @@
 /**
  * Plugin Name:             Wash Care Symbols for WooCommerce
  * Description:             Display wash/care symbols in WooCommerce products
- * Version:                 2.1.9
+ * Version:                 2.2.0
  * Requires at least:       5.2
  * Requires PHP:            7.2
  * WC requires at least:    4.0
- * WC tested up to:         5.0
+ * WC tested up to:         5.6
  * Author:                  Charlie Etienne
  * Author URI:              https://web-nancy.fr
  * License:                 GPL v2 or later
@@ -24,6 +24,8 @@ class WashCareSymbolsForWooCommerce {
 
 	public function __construct() {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
+		add_action( 'admin_menu', [ $this, 'add_settings_page' ] );
+		add_action( 'admin_init', [ $this, 'register_settings' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
 		add_filter( 'woocommerce_product_tabs', [ $this, 'force_tab_to_display' ], 98 );
 		add_filter( 'woocommerce_product_data_tabs', [ $this, 'wash_care_tab' ], 10, 1 );
@@ -226,20 +228,47 @@ class WashCareSymbolsForWooCommerce {
 	 * Display our icons in Additional Information tab
 	 */
 	public function additional_info_display() {
-		echo '<table class="wcsfw"><tbody>';
-		foreach ( $this->values as $fieldkey => $field ) {
-			$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
-			if ( $choices ) {
-				echo '<tr>';
-				echo '<th class="wcsfw-title">' . $field[ 'label' ] . '</th>';
-				echo '<td class="wcsfw-symbols-container">';
-				foreach ( $choices as $choice ) {
-					echo '<button aria-label="' . $field[ 'choices' ][ $choice ] . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
-					echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
-					echo '</button>';
+		$direction = $this->get_direction_setting();
+		echo '<table class="wcsfw ' . $direction . '"><tbody>';
+		if ($direction === 'horizontal'){
+			foreach ( $this->values as $fieldkey => $field ) {
+				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
+				if ( $choices ) {
+					echo '<tr>';
+					echo '<th class="wcsfw-title">' . $field[ 'label' ] . '</th>';
+					echo '<td class="wcsfw-symbols-container">';
+					foreach ( $choices as $choice ) {
+						echo '<button aria-label="' . $field[ 'choices' ][ $choice ] . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
+						echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
+						echo '</button>';
+					}
+					echo '</td></tr>';
 				}
-				echo '</td></tr>';
 			}
+		}
+		else {
+            echo '<tr>';
+			foreach ( $this->values as $fieldkey => $field ) {
+				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
+				if ( $choices ) {
+					echo '<th class="wcsfw-title">' . $field[ 'label' ] . '</th>';
+				}
+			}
+            echo '</tr>';
+			echo '<tr>';
+			foreach ( $this->values as $fieldkey => $field ) {
+				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
+				if ( $choices ) {
+					echo '<td class="wcsfw-symbols-container">';
+					foreach ( $choices as $choice ) {
+						echo '<button aria-label="' . $field[ 'choices' ][ $choice ] . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
+						echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
+						echo '</button>';
+					}
+					echo '</td>';
+				}
+			}
+			echo '</tr>';
 		}
 		echo '</tbody></table>';
 	}
@@ -313,6 +342,74 @@ class WashCareSymbolsForWooCommerce {
 		}
 		echo '</p>';
 	}
+
+	public function add_settings_page() {
+		add_options_page( 'Wash Care Symbols for WooCommerce', 'Wash Care Symbols for WooCommerce', 'manage_options', 'wash-care-symbols-for-woocommerce', [
+			$this,
+			'render_plugin_settings_page'
+		] );
+	}
+
+	public function render_plugin_settings_page() {
+		?>
+        <!--suppress HtmlUnknownTarget -->
+        <form action="options.php" method="POST">
+			<?php
+			settings_fields( 'wcsfw_options' );
+			do_settings_sections( 'wcsfw' );
+			submit_button();
+			?>
+        </form>
+		<?php
+	}
+
+	public function register_settings() {
+		register_setting( 'wcsfw_options', 'wcsfw_options', 'wcsfw_options_validate' );
+		add_settings_section( 'settings', __( 'Wash Care Symbols for WooCommerce Settings', 'wash-care-symbols-for-woocommerce' ), [ $this, 'section_settings' ], 'wcsfw' );
+		add_settings_field(
+			'setting_direction',
+			__( 'Choose direction', 'wash-care-symbols-for-woocommerce' ),
+			[
+				$this,
+				'setting_direction'
+			],
+			'wcsfw',
+			'settings'
+		);
+	}
+
+	public function section_settings(): bool {
+        return true;
+	}
+
+	public function setting_direction() {
+		$options = get_option( 'wcsfw_options' );
+		?>
+        <label for="horizontal"> <input type="radio"
+                                        name="wcsfw_options[direction]"
+                                        id="horizontal"
+                                        value="horizontal" <?php checked( 'horizontal', $options[ 'direction' ] );
+			echo empty( $options[ 'direction' ] ) ? 'checked' : ''; ?>>
+			<?php _e( 'Horizontal (Default)', 'wash-care-symbols-for-woocommerce' ); ?>
+        </label>
+        <label for="vertical"> <input type="radio"
+                                      name="wcsfw_options[direction]"
+                                      id="vertical"
+                                      value="vertical" <?php checked( 'vertical', $options[ 'direction' ] ); ?>>
+			<?php _e( 'Vertical', 'wash-care-symbols-for-woocommerce' ); ?>
+        </label>
+		<?php
+	}
+
+	public function get_direction_setting() {
+		$options = get_option( 'wcsfw_options' );
+		if ( empty( $options ) || empty( $options[ 'direction' ] ) ) {
+			return 'horizontal';
+		}
+
+		return $options[ 'direction' ];
+	}
+
 }
 
 new WashCareSymbolsForWooCommerce();

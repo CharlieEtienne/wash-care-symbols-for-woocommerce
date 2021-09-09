@@ -1,9 +1,9 @@
 === Wash Care Symbols for WooCommerce ===
 Contributors: charlieetienne
 Tags: woocommerce, wash, care, symbols, clothes
-Stable tag: 2.1.9
+Stable tag: 2.2.0
 Requires at least: 5.2
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -101,6 +101,10 @@ For now, these choices are available:
     * Use any bleach
     * Use only non-chlorine bleach
     * Do not bleach
+
+== Settings ==
+
+Horizontal/Vertical mode (added in 2.2). Go to Settings > Wash Care Symbols for WooCommerce.
 
 = Resources =
 
