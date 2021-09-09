@@ -104,7 +104,7 @@ For now, these choices are available:
 
 == Settings ==
 
-Horizontal/Vertical mode (added in 2.2). Go to Settings > Wash Care Symbols for WooCommerce.
+Horizontal/Vertical/Minimal layout (added in 2.2). Go to Settings > Wash Care Symbols for WooCommerce.
 
 = Resources =
 
