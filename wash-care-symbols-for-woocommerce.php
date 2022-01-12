@@ -2,7 +2,7 @@
 /**
  * Plugin Name:             Wash Care Symbols for WooCommerce
  * Description:             Display wash/care symbols in WooCommerce products
- * Version:                 2.2.1
+ * Version:                 2.2.2
  * Requires at least:       5.2
  * Requires PHP:            7.2
  * WC requires at least:    4.0
@@ -238,7 +238,7 @@ class WashCareSymbolsForWooCommerce {
 				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
 				if ( $choices ) {
 					foreach ( $choices as $choice ) {
-						echo '<button aria-label="' . $field[ 'choices' ][ $choice ] . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
+						echo '<button aria-label="' . __( $field[ 'choices' ][ $choice ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
 						echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
 						echo '</button>';
 					}
@@ -251,7 +251,7 @@ class WashCareSymbolsForWooCommerce {
 			foreach ( $this->values as $fieldkey => $field ) {
 				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
 				if ( $choices ) {
-					echo '<th class="wcsfw-title">' . $field[ 'label' ] . '</th>';
+					echo '<th class="wcsfw-title">' . __( $field[ 'label' ], 'wash-care-symbols-for-woocommerce' ) . '</th>';
 				}
 			}
             echo '</tr>';
@@ -261,7 +261,7 @@ class WashCareSymbolsForWooCommerce {
 				if ( $choices ) {
 					echo '<td class="wcsfw-symbols-container">';
 					foreach ( $choices as $choice ) {
-						echo '<button aria-label="' . $field[ 'choices' ][ $choice ] . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
+						echo '<button aria-label="' . __( $field[ 'choices' ][ $choice ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
 						echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
 						echo '</button>';
 					}
@@ -275,10 +275,10 @@ class WashCareSymbolsForWooCommerce {
 				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
 				if ( $choices ) {
 					echo '<tr>';
-					echo '<th class="wcsfw-title">' . $field[ 'label' ] . '</th>';
+					echo '<th class="wcsfw-title">' . __( $field[ 'label' ], 'wash-care-symbols-for-woocommerce' ) . '</th>';
 					echo '<td class="wcsfw-symbols-container">';
 					foreach ( $choices as $choice ) {
-						echo '<button aria-label="' . $field[ 'choices' ][ $choice ] . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
+						echo '<button aria-label="' . __( $field[ 'choices' ][ $choice ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
 						echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
 						echo '</button>';
 					}
