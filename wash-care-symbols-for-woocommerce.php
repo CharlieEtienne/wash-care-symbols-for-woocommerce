@@ -2,11 +2,11 @@
 /**
  * Plugin Name:             Wash Care Symbols for WooCommerce
  * Description:             Display wash/care symbols in WooCommerce products
- * Version:                 2.2.2
+ * Version:                 2.3.0
  * Requires at least:       5.2
  * Requires PHP:            7.2
  * WC requires at least:    4.0
- * WC tested up to:         5.6
+ * WC tested up to:         6.1
  * Author:                  Charlie Etienne
  * Author URI:              https://web-nancy.fr
  * License:                 GPL v2 or later
@@ -139,6 +139,28 @@ class WashCareSymbolsForWooCommerce {
 					'bleaching_1' => __( 'Use any bleach', 'wash-care-symbols-for-woocommerce' ),
 					'bleaching_2' => __( 'Use only non-chlorine bleach', 'wash-care-symbols-for-woocommerce' ),
 					'bleaching_3' => __( 'Do not bleach', 'wash-care-symbols-for-woocommerce' ),
+				],
+			],
+			'wcsfw_chemical_cleaning'    => [
+				'label'       => __( 'Chemical cleaning', 'wash-care-symbols-for-woocommerce' ),
+				'description' => __( 'Chemical cleaning', 'wash-care-symbols-for-woocommerce' ),
+				'choices'     => [
+					'chemical_cleaning_1' => __( 'Dry clean, hydrocarbon solvent only (HCS)', 'wash-care-symbols-for-woocommerce' ),
+					'chemical_cleaning_2' => __( 'Gentle cleaning with hydrocarbon sovents (HCS)', 'wash-care-symbols-for-woocommerce' ),
+					'chemical_cleaning_3' => __( 'Very gentle cleaning with hydrocarbon sovents (HCS)', 'wash-care-symbols-for-woocommerce' ),
+					'chemical_cleaning_4' => __( 'Dry clean, tetrachloroethylene only (PCE)', 'wash-care-symbols-for-woocommerce' ),
+					'chemical_cleaning_5' => __( 'Gentle cleaning with tetrachloroethylene (PCE)', 'wash-care-symbols-for-woocommerce' ),
+					'chemical_cleaning_6' => __( 'Very gentle cleaning with tetrachloroethylene (PCE)', 'wash-care-symbols-for-woocommerce' ),
+				],
+			],
+			'wcsfw_wet_cleaning'    => [
+				'label'       => __( 'Wet cleaning', 'wash-care-symbols-for-woocommerce' ),
+				'description' => __( 'Wet cleaning', 'wash-care-symbols-for-woocommerce' ),
+				'choices'     => [
+					'wet_cleaning_1' => __( 'Wet clean', 'wash-care-symbols-for-woocommerce' ),
+					'wet_cleaning_2' => __( 'Gentle wet cleaning', 'wash-care-symbols-for-woocommerce' ),
+					'wet_cleaning_3' => __( 'Very gentle wet cleaning', 'wash-care-symbols-for-woocommerce' ),
+					'wet_cleaning_4' => __( 'Professionnal wet cleaning is not allowed', 'wash-care-symbols-for-woocommerce' ),
 				],
 			],
 		];

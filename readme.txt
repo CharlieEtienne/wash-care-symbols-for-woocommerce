@@ -1,9 +1,9 @@
 === Wash Care Symbols for WooCommerce ===
 Contributors: charlieetienne
 Tags: woocommerce, wash, care, symbols, clothes
-Stable tag: 2.2.2
+Stable tag: 2.3.0
 Requires at least: 5.2
-Tested up to: 5.8
+Tested up to: 5.9
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -102,6 +102,20 @@ For now, these choices are available:
     * Use only non-chlorine bleach
     * Do not bleach
 
+* Chemical cleaning
+    * Dry clean, hydrocarbon solvent only (HCS)
+    * Gentle cleaning with hydrocarbon sovents (HCS)
+    * Very gentle cleaning with hydrocarbon sovents (HCS)
+    * Dry clean, tetrachloroethylene only (PCE)
+    * Gentle cleaning with tetrachloroethylene (PCE)
+    * Very gentle cleaning with tetrachloroethylene (PCE)
+
+* Wet cleaning
+    * Wet clean
+    * Gentle wet cleaning
+    * Very gentle wet cleaning
+    * Professionnal wet cleaning is not allowed
+
 == Settings ==
 
 Horizontal/Vertical/Minimal layout (added in 2.2). Go to Settings > Wash Care Symbols for WooCommerce.
@@ -130,3 +144,27 @@ Sure, go ahead! It is completely open source.
 
 1. Product page
 2. Product edit in administration
+
+== Changelog ==
+
+= 2.3.0 =
+* Adds 10 new symbols for professional cleaning:
+  - Dry clean, hydrocarbon solvent only (HCS)
+  - Gentle cleaning with hydrocarbon sovents (HCS)
+  - Very gentle cleaning with hydrocarbon sovents (HCS)
+  - Dry clean, tetrachloroethylene only (PCE)
+  - Gentle cleaning with tetrachloroethylene (PCE)
+  - Very gentle cleaning with tetrachloroethylene (PCE)
+  - Wet clean
+  - Gentle wet cleaning
+  - Very gentle wet cleaning
+  - Professionnal wet cleaning is not allowed
+
+= 2.2.2 =
+* Fix translation
+
+= 2.2.1 =
+* You can now choose between Horizontal/Vertical/Minimal layouts
+
+= 2.2.0 =
+* Added "vertical" mode
