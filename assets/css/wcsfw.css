@@ -13,3 +13,11 @@
 .wcsfw-symbol-img {
     height: 38px;
 }
+.wcsfw.below-short-desc ul {
+    padding-left: 0
+}
+
+.wcsfw.below-short-desc ul li {
+    list-style-type: none !important;
+    display: inline-block;
+}

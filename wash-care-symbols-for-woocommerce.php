@@ -2,7 +2,7 @@
 /**
  * Plugin Name:             Wash Care Symbols for WooCommerce
  * Description:             Display wash/care symbols in WooCommerce products
- * Version:                 2.3.0
+ * Version:                 2.4.0
  * Requires at least:       5.2
  * Requires PHP:            7.2
  * WC requires at least:    4.0
@@ -26,12 +26,14 @@ class WashCareSymbolsForWooCommerce {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'admin_menu', [ $this, 'add_settings_page' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
+        add_action( 'wcsfw_display', [ $this, 'display' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
 		add_filter( 'woocommerce_product_tabs', [ $this, 'force_tab_to_display' ], 98 );
 		add_filter( 'woocommerce_product_data_tabs', [ $this, 'wash_care_tab' ], 10, 1 );
 		add_action( 'woocommerce_product_data_panels', [ $this, 'wash_care_tab_content' ] );
 		add_action( 'woocommerce_process_product_meta', [ $this, 'save_fields' ] );
-		add_action( 'woocommerce_product_additional_information', [ $this, 'additional_info_display' ] );
+
+        do_action( 'wcsfw_display' );
 
 		/**
 		 * Multidimensional array with all the choices, labels, and all necessary informations for the fields
@@ -246,6 +248,18 @@ class WashCareSymbolsForWooCommerce {
 		}
 	}
 
+	public function display(  ) {
+		$position = $this->get_position_setting();
+
+		if ( $position === 'below_short_desc' ){
+            $priority = apply_filters( 'wcsfw_below_short_desc_priority', 21 );
+			add_action( 'woocommerce_single_product_summary', [ $this, 'below_short_desc_display' ], $priority );
+		}
+        else {
+	        add_action( 'woocommerce_product_additional_information', [ $this, 'additional_info_display' ] );
+        }
+    }
+
 	/**
 	 * Display our icons in Additional Information tab
 	 */
@@ -309,6 +323,27 @@ class WashCareSymbolsForWooCommerce {
 			}
 		}
 		echo '</tbody></table>';
+	}
+
+	/**
+	 * Display our icons below product short description
+	 */
+	public function below_short_desc_display() {
+		echo '<div class="wcsfw below-short-desc">';
+			echo '<ul>';
+			echo '<li class="wcsfw-symbols-container">';
+			foreach ( $this->values as $fieldkey => $field ) {
+				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
+				if ( $choices ) {
+					foreach ( $choices as $choice ) {
+						echo '<button aria-label="' . __( $field[ 'choices' ][ $choice ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
+						echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
+						echo '</button>';
+					}
+				}
+			}
+			echo '</li></ul>';
+		echo '</div>';
 	}
 
 	/**
@@ -405,8 +440,18 @@ class WashCareSymbolsForWooCommerce {
 		register_setting( 'wcsfw_options', 'wcsfw_options', 'wcsfw_options_validate' );
 		add_settings_section( 'settings', __( 'Wash Care Symbols for WooCommerce Settings', 'wash-care-symbols-for-woocommerce' ), [ $this, 'section_settings' ], 'wcsfw' );
 		add_settings_field(
+			'setting_position',
+			__( 'Choose position', 'wash-care-symbols-for-woocommerce' ),
+			[
+				$this,
+				'setting_position'
+			],
+			'wcsfw',
+			'settings'
+		);
+        add_settings_field(
 			'setting_layout',
-			__( 'Choose layout', 'wash-care-symbols-for-woocommerce' ),
+			__( 'Choose layout (only for default position)', 'wash-care-symbols-for-woocommerce' ),
 			[
 				$this,
 				'setting_layout'
@@ -445,6 +490,25 @@ class WashCareSymbolsForWooCommerce {
 		<?php
 	}
 
+	public function setting_position() {
+		$position = $this->get_position_setting();
+		?>
+        <label for="standard"> <input type="radio"
+                                        name="wcsfw_options[position]"
+                                        id="standard"
+                                        value="standard" <?php checked( 'standard', $position );
+			echo empty( $position ) ? 'checked' : ''; ?>>
+			<?php _e( 'Additional Information (Default)', 'wash-care-symbols-for-woocommerce' ); ?>
+        </label>
+        <label for="below_short_desc"> <input type="radio"
+                                      name="wcsfw_options[position]"
+                                      id="below_short_desc"
+                                      value="below_short_desc" <?php checked( 'below_short_desc', $position ); ?>>
+			<?php _e( 'Below short description', 'wash-care-symbols-for-woocommerce' ); ?>
+        </label>
+		<?php
+	}
+
 	public function get_layout_setting() {
 		$options = get_option( 'wcsfw_options' );
 		if ( empty( $options ) || empty( $options[ 'layout' ] ) ) {
@@ -452,6 +516,15 @@ class WashCareSymbolsForWooCommerce {
 		}
 
 		return $options[ 'layout' ];
+	}
+
+	public function get_position_setting() {
+		$options = get_option( 'wcsfw_options' );
+		if ( empty( $options ) || empty( $options[ 'position' ] ) ) {
+			return 'standard';
+		}
+
+		return $options[ 'position' ];
 	}
 
 }

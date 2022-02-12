@@ -1,7 +1,7 @@
 === Wash Care Symbols for WooCommerce ===
 Contributors: charlieetienne
 Tags: woocommerce, wash, care, symbols, clothes
-Stable tag: 2.3.0
+Stable tag: 2.4.0
 Requires at least: 5.2
 Tested up to: 5.9
 Requires PHP: 7.2
@@ -118,7 +118,16 @@ For now, these choices are available:
 
 == Settings ==
 
-Horizontal/Vertical/Minimal layout (added in 2.2). Go to Settings > Wash Care Symbols for WooCommerce.
+Go to Settings > Wash Care Symbols for WooCommerce.
+
+* **Position:** Inside "Additional Information"(default) / below short description (added in 2.4).
+* **Layout:** Horizontal/Vertical/Minimal (added in 2.2).
+
+== Hooks ==
+
+* `wcsfw_display` (action): allows you to use your own display hook
+* `wcsfw-data` (filter): allows you modify symbols data and texts
+* `wcsfw_below_short_desc_priority` (filter): allows you to change hook priority if symbols doesn't appear in the right place when using *below short description* setting
 
 = Resources =
 
@@ -146,6 +155,9 @@ Sure, go ahead! It is completely open source.
 2. Product edit in administration
 
 == Changelog ==
+
+= 2.3.0 =
+* Adds an setting option to display symbols below short description
 
 = 2.3.0 =
 * Adds 10 new symbols for professional cleaning:
