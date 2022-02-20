@@ -1,0 +1,14 @@
+<wpml-config>
+  <custom-fields>
+    <custom-field action="translate">_wcsfw_wash</custom-field>
+    <custom-field action="translate">_wcsfw_washing_temp</custom-field>
+    <custom-field action="translate">_wcsfw_wash_cycle</custom-field>
+    <custom-field action="translate">_wcsfw_bleach</custom-field>
+    <custom-field action="translate">_wcsfw_dry</custom-field>
+    <custom-field action="translate">_wcsfw_iron</custom-field>
+    <custom-field action="translate">_wcsfw_dry_clean</custom-field>
+    <custom-field action="translate">_wcsfw_drying</custom-field>
+    <custom-field action="translate">_wcsfw_chemical_cleaning</custom-field>
+    <custom-field action="translate">_wcsfw_wet_cleaning</custom-field>
+  </custom-fields>
+</wpml-config>
