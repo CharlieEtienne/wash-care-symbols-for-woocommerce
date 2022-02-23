@@ -22,19 +22,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WashCareSymbolsForWooCommerce {
 	public $values;
 
+	private static $instance;
+
+	final public static function get_instance(): WashCareSymbolsForWooCommerce {
+		if (null === self::$instance) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+    public function init() {
+	    add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
+	    add_action( 'admin_menu', [ $this, 'add_settings_page' ] );
+	    add_action( 'admin_init', [ $this, 'register_settings' ] );
+	    add_action( 'wcsfw_display', [ $this, 'display' ] );
+	    add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
+	    add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
+	    add_filter( 'woocommerce_product_tabs', [ $this, 'force_tab_to_display' ], 98 );
+	    add_filter( 'woocommerce_product_data_tabs', [ $this, 'wash_care_tab' ], 10, 1 );
+	    add_action( 'woocommerce_product_data_panels', [ $this, 'wash_care_tab_content' ] );
+	    add_action( 'woocommerce_process_product_meta', [ $this, 'save_fields' ] );
+
+	    do_action( 'wcsfw_display' );
+    }
+
 	public function __construct() {
-		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
-		add_action( 'admin_menu', [ $this, 'add_settings_page' ] );
-		add_action( 'admin_init', [ $this, 'register_settings' ] );
-        add_action( 'wcsfw_display', [ $this, 'display' ] );
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
-		add_filter( 'woocommerce_product_tabs', [ $this, 'force_tab_to_display' ], 98 );
-		add_filter( 'woocommerce_product_data_tabs', [ $this, 'wash_care_tab' ], 10, 1 );
-		add_action( 'woocommerce_product_data_panels', [ $this, 'wash_care_tab_content' ] );
-		add_action( 'woocommerce_process_product_meta', [ $this, 'save_fields' ] );
-
-        do_action( 'wcsfw_display' );
-
 		/**
 		 * Multidimensional array with all the choices, labels, and all necessary informations for the fields
 		 */
@@ -529,4 +542,4 @@ class WashCareSymbolsForWooCommerce {
 
 }
 
-new WashCareSymbolsForWooCommerce();
+WashCareSymbolsForWooCommerce::get_instance()->init();
