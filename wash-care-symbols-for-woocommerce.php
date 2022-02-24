@@ -2,7 +2,7 @@
 /**
  * Plugin Name:             Wash Care Symbols for WooCommerce
  * Description:             Display wash/care symbols in WooCommerce products
- * Version:                 2.6.0
+ * Version:                 2.7.0
  * Requires at least:       5.2
  * Requires PHP:            7.2
  * WC requires at least:    4.0
@@ -192,6 +192,10 @@ class WashCareSymbolsForWooCommerce {
 	public function enqueue_styles() {
 		wp_enqueue_style( 'wcsfw-microtip', plugin_dir_url( __FILE__ ) . 'assets/css/vendor/microtip.css' );
 		wp_enqueue_style( 'wcsfw-main', plugin_dir_url( __FILE__ ) . 'assets/css/wcsfw.css' );
+		$css = ".wcsfw-symbol-img,.woocommerce img.wcsfw-symbol-img,.woocommerce-page img.wcsfw-symbol-img {";
+		$css .= "height: {$this->get_icon_size_setting()}px;";
+		$css .= "}";
+        wp_add_inline_style( 'wcsfw-main', $css);
 	}
 
 	public function enqueue_admin_scripts($hook) {
@@ -484,6 +488,16 @@ class WashCareSymbolsForWooCommerce {
 			'wcsfw',
 			'settings'
 		);
+		add_settings_field(
+			'setting_icon_size',
+			__( 'Choose icons size', 'wash-care-symbols-for-woocommerce' ),
+			[
+				$this,
+				'setting_icon_size'
+			],
+			'wcsfw',
+			'settings'
+		);
 	}
 
 	public function section_settings(): bool {
@@ -534,6 +548,15 @@ class WashCareSymbolsForWooCommerce {
 		<?php
 	}
 
+	public function setting_icon_size() {
+		$icon_size = $this->get_icon_size_setting();
+		?>
+        <label for="icon_size">
+            <input type="number" name="wcsfw_options[icon_size]" id="icon_size" value="<?php echo $icon_size ?>" style="width: 70px" >&nbsp;px
+        </label>
+		<?php
+	}
+
 	public function get_layout_setting() {
 		$options = get_option( 'wcsfw_options' );
 		if ( empty( $options ) || empty( $options[ 'layout' ] ) ) {
@@ -550,6 +573,15 @@ class WashCareSymbolsForWooCommerce {
 		}
 
 		return $options[ 'position' ];
+	}
+
+	public function get_icon_size_setting() {
+		$options = get_option( 'wcsfw_options' );
+		if ( empty( $options ) || empty( $options[ 'icon_size' ] ) ) {
+			return '38';
+		}
+
+		return $options[ 'icon_size' ];
 	}
 
 }

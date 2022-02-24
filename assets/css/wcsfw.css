@@ -1,6 +1,7 @@
 .wcsfw-title {
     width: 180px;
 }
+
 .wcsfw-symbol-btn {
     background: none !important;
     color: inherit !important;
@@ -10,11 +11,7 @@
     cursor: pointer !important;
     outline: inherit !important;
 }
-.wcsfw-symbol-img,
-.woocommerce img.wcsfw-symbol-img,
-.woocommerce-page img.wcsfw-symbol-img {
-    height: 38px;
-}
+
 .wcsfw.below-short-desc ul {
     padding-left: 0
 }
