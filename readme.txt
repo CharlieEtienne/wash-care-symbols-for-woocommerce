@@ -1,7 +1,7 @@
 === Wash Care Symbols for WooCommerce ===
 Contributors: charlieetienne
 Tags: woocommerce, wash, care, symbols, clothes
-Stable tag: 2.5.0
+Stable tag: 2.6.0
 Requires at least: 5.2
 Tested up to: 5.9
 Requires PHP: 7.2
@@ -155,6 +155,10 @@ Sure, go ahead! It is completely open source.
 2. Product edit in administration
 
 == Changelog ==
+
+= 2.6.0 =
+* **We now have symbols in admin too!** Gets rid of selectWoo on WCSFW fields and loads a modified copy of select2.js in order to add symbols in dropdowns and selected options, which is not possible with selectWoo since v1.07 (see https://github.com/woocommerce/selectWoo/issues/39)
+* Move to Singleton pattern to let other developpers unhook actions or filters. If you want to unhook something, use it like this, for example: `remove_filter( 'hook_name', [ WashCareSymbolsForWooCommerce::get_instance(), 'method_name' ] );`
 
 = 2.5.0 =
 * Improve LocoTranslate compatibility: fix wrong domain path in .pot filename

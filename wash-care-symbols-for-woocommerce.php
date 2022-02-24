@@ -2,7 +2,7 @@
 /**
  * Plugin Name:             Wash Care Symbols for WooCommerce
  * Description:             Display wash/care symbols in WooCommerce products
- * Version:                 2.5.0
+ * Version:                 2.6.0
  * Requires at least:       5.2
  * Requires PHP:            7.2
  * WC requires at least:    4.0
@@ -49,7 +49,7 @@ class WashCareSymbolsForWooCommerce {
 
 	public function __construct() {
 		/**
-		 * Multidimensional array with all the choices, labels, and all necessary informations for the fields
+		 * Multidimensional array with all the choices, labels, and all necessary information for the fields
 		 */
 		$this->values = [
 			'wcsfw_washing'      => [
@@ -192,6 +192,18 @@ class WashCareSymbolsForWooCommerce {
 	public function enqueue_styles() {
 		wp_enqueue_style( 'wcsfw-microtip', plugin_dir_url( __FILE__ ) . 'assets/css/vendor/microtip.css' );
 		wp_enqueue_style( 'wcsfw-main', plugin_dir_url( __FILE__ ) . 'assets/css/wcsfw.css' );
+	}
+
+	public function enqueue_admin_scripts($hook) {
+		if ('post.php' !== $hook || get_current_screen()->post_type !== 'product') {
+			return;
+		}
+        // Loads a modified copy of select2.js in order to add symbols in dropdowns and selected options,
+        // which is not possible with selectWoo since v1.07
+        // See https://github.com/woocommerce/selectWoo/issues/39
+		wp_enqueue_script('select-wcsfw', plugin_dir_url(__FILE__) . 'assets/js/vendor/select2-wcsfw.js', [ 'jquery' ] );
+		wp_enqueue_script('wcsfw-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin.js', [ 'selectWoo', 'select-wcsfw' ] );
+        wp_localize_script( 'wcsfw-admin-script', 'symbols_dir', [ plugin_dir_url( __FILE__ ) . 'symbols/' ] );
 	}
 
 	/**
