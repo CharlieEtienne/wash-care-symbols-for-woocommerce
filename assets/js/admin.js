@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedVariable
+
 (function ($) {
 
     "use strict";
@@ -14,16 +16,30 @@
                     templateSelection: formatState
                 });
         });
+
+        if (wcsfw_page_type[0] && wcsfw_page_type[0] ==="product_cat_edit"){
+            $(document).find("select.wcsfw").select_wcsfw({
+                    templateResult: formatState,
+                    templateSelection: formatState
+                });
+        }
+
+        $('#wcsfw_use_at_cat_level').on('change', function (e) {
+            if($(this).prop('checked')) {
+                $('.wcsfw-cat-field').show();
+            } else {
+                $('.wcsfw-cat-field').hide();
+            }
+        }).trigger('change');
     });
 
     function formatState(opt) {
-        if (!opt.id) {
+        if (!opt.id || !symbols_dir[0]) {
             return opt.text;
         }
 
-        // noinspection JSUnresolvedVariable
         return $(
-            '<img src="' + symbols_dir + opt.id + '.png" height="38px" alt="" style="vertical-align:middle;" /> <span style="vertical-align:middle;">' + opt.text + '</span>'
+            '<img src="' + symbols_dir[0] + opt.id + '.png" height="38px" alt="" style="vertical-align:middle;" /> <span style="vertical-align:middle;">' + opt.text + '</span>'
         );
     }
 

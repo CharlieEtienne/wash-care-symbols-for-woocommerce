@@ -1,7 +1,7 @@
 === Wash Care Symbols for WooCommerce ===
 Contributors: charlieetienne
 Tags: woocommerce, wash, care, symbols, clothes
-Stable tag: 2.7.0
+Stable tag: 3.0.0
 Requires at least: 5.2
 Tested up to: 5.9
 Requires PHP: 7.2
@@ -16,6 +16,8 @@ Display wash/care symbols in WooCommerce products.
 Display wash/care symbols in WooCommerce products.
 
 == Usage & Documentation ==
+
+You can choose wash/care symbols to display on product category level or in each individual product
 
 For now, these choices are available:
 
@@ -156,6 +158,9 @@ Sure, go ahead! It is completely open source.
 2. Product edit in administration
 
 == Changelog ==
+
+= 3.0.0 =
+* **We can now choose wash/care symbols on category level!** This setting can be overrided in each individual product.
 
 = 2.7.0 =
 * Adds a setting option to choose icons size

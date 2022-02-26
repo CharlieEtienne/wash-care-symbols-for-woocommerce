@@ -2,7 +2,7 @@
 /**
  * Plugin Name:             Wash Care Symbols for WooCommerce
  * Description:             Display wash/care symbols in WooCommerce products
- * Version:                 2.7.0
+ * Version:                 3.0.0
  * Requires at least:       5.2
  * Requires PHP:            7.2
  * WC requires at least:    4.0
@@ -43,7 +43,10 @@ class WashCareSymbolsForWooCommerce {
 	    add_filter( 'woocommerce_product_data_tabs', [ $this, 'wash_care_tab' ], 10, 1 );
 	    add_action( 'woocommerce_product_data_panels', [ $this, 'wash_care_tab_content' ] );
 	    add_action( 'woocommerce_process_product_meta', [ $this, 'save_fields' ] );
-
+	    add_action( 'product_cat_add_form_fields', [ $this, 'product_cat_add_form_fields' ], 10 );
+	    add_action( 'product_cat_edit_form_fields', [ $this, 'product_cat_edit_form_fields' ], 10, 2 );
+	    add_action( 'created_product_cat', [ $this, 'save_term_fields' ] );
+	    add_action( 'edited_product_cat', [ $this, 'save_term_fields' ] );
 	    do_action( 'wcsfw_display' );
     }
 
@@ -199,15 +202,21 @@ class WashCareSymbolsForWooCommerce {
 	}
 
 	public function enqueue_admin_scripts($hook) {
-		if ('post.php' !== $hook || get_current_screen()->post_type !== 'product') {
-			return;
-		}
-        // Loads a modified copy of select2.js in order to add symbols in dropdowns and selected options,
-        // which is not possible with selectWoo since v1.07
-        // See https://github.com/woocommerce/selectWoo/issues/39
-		wp_enqueue_script('select-wcsfw', plugin_dir_url(__FILE__) . 'assets/js/vendor/select2-wcsfw.js', [ 'jquery' ] );
-		wp_enqueue_script('wcsfw-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin.js', [ 'selectWoo', 'select-wcsfw' ] );
-        wp_localize_script( 'wcsfw-admin-script', 'symbols_dir', [ plugin_dir_url( __FILE__ ) . 'symbols/' ] );
+        if( $this->is_product_edit_page( $hook ) || $this->is_product_cat_edit_page( $hook ) ) {
+            
+	        // Loads a modified copy of select2.js in order to add symbols in dropdowns and selected options,
+	        // which is not possible with selectWoo since v1.07
+	        // See https://github.com/woocommerce/selectWoo/issues/39
+	        wp_enqueue_script( 'select-wcsfw', plugin_dir_url( __FILE__ ) . 'assets/js/vendor/select2-wcsfw.js', [ 'jquery' ] );
+	        wp_enqueue_script( 'wcsfw-admin-script', plugin_dir_url( __FILE__ ) . 'assets/js/admin.js', [
+		        'selectWoo',
+		        'select-wcsfw'
+	        ] );
+	        wp_localize_script( 'wcsfw-admin-script', 'symbols_dir', [ plugin_dir_url( __FILE__ ) . 'symbols/' ] );
+
+	        $page_type = $this->is_product_cat_edit_page( $hook ) ? 'product_cat_edit' : 'product_edit';
+            wp_localize_script( 'wcsfw-admin-script', 'wcsfw_page_type', [ $page_type ] );
+        }
 	}
 
 	/**
@@ -243,20 +252,28 @@ class WashCareSymbolsForWooCommerce {
 	 * Return all multiselect fields
 	 */
 	public function get_fields() {
-		foreach ( $this->values as $fieldkey => $field ) {
-			$this->multiple_select(
-				[
-					'id'          => $fieldkey,
-					'name'        => '_' . $fieldkey . '[]',
-					'label'       => $field[ 'label' ],
-					'class'       => 'wcsfw',
-					'desc_tip'    => true,
-					'description' => $field[ 'description' ],
-					'options'     => $field[ 'choices' ],
-				]
-			);
+        $values = $this->get_formatted_values();
+		foreach ( $values as $field ) {
+			$this->multiple_select($field);
 		}
 	}
+
+	public function get_formatted_values(): array {
+        $formatted = [];
+		foreach ( $this->values as $fieldkey => $field ) {
+			$formatted[] = [
+				'id'          => $fieldkey,
+				'name'        => '_' . $fieldkey . '[]',
+				'label'       => $field[ 'label' ],
+				'class'       => 'wcsfw',
+				'desc_tip'    => true,
+				'description' => $field[ 'description' ],
+				'options'     => $field[ 'choices' ],
+			];
+		}
+
+        return $formatted;
+    }
 
 	/**
 	 * Called when we save the post
@@ -294,40 +311,40 @@ class WashCareSymbolsForWooCommerce {
 	 */
 	public function additional_info_display() {
 		$layout = $this->get_layout_setting();
+
+        $values = $this->get_product_values();
+
+        if ( !$values ){return;}
+
 		echo '<table class="wcsfw ' . $layout . '"><tbody>';
 		if ($layout === 'minimal'){
             echo '<tr>';
             echo '<th class="wcsfw-title">' . __( 'Wash / Care', 'wash-care-symbols-for-woocommerce' ) . '</th>';
             echo '<td class="wcsfw-symbols-container">';
-			foreach ( $this->values as $fieldkey => $field ) {
-				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
-				if ( $choices ) {
-					foreach ( $choices as $choice ) {
-						echo '<button aria-label="' . __( $field[ 'choices' ][ $choice ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
-						echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
-						echo '</button>';
-					}
-				}
+			foreach ( $values as $fieldkey => $options ) {
+                foreach ( $options as $option ) {
+                    echo '<button aria-label="' . __( $this->values[$fieldkey][ 'choices' ][ $option ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
+                    echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $option . '.png">';
+                    echo '</button>';
+                }
 			}
             echo '</td></tr>';
 		}
 		elseif($layout === 'vertical') {
             echo '<tr>';
-			foreach ( $this->values as $fieldkey => $field ) {
-				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
-				if ( $choices ) {
-					echo '<th class="wcsfw-title">' . __( $field[ 'label' ], 'wash-care-symbols-for-woocommerce' ) . '</th>';
+			foreach ( $values as $fieldkey => $options ) {
+				if ( $options ) {
+					echo '<th class="wcsfw-title">' . __( $this->values[$fieldkey][ 'label' ], 'wash-care-symbols-for-woocommerce' ) . '</th>';
 				}
 			}
             echo '</tr>';
 			echo '<tr>';
-			foreach ( $this->values as $fieldkey => $field ) {
-				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
-				if ( $choices ) {
+			foreach ( $values as $fieldkey => $options ) {
+				if ( $options ) {
 					echo '<td class="wcsfw-symbols-container">';
-					foreach ( $choices as $choice ) {
-						echo '<button aria-label="' . __( $field[ 'choices' ][ $choice ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
-						echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
+					foreach ( $options as $option ) {
+						echo '<button aria-label="' . __( $this->values[$fieldkey][ 'choices' ][ $option ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
+						echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $option . '.png">';
 						echo '</button>';
 					}
 					echo '</td>';
@@ -336,19 +353,16 @@ class WashCareSymbolsForWooCommerce {
 			echo '</tr>';
 		}
 		else {
-			foreach ( $this->values as $fieldkey => $field ) {
-				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
-				if ( $choices ) {
-					echo '<tr>';
-					echo '<th class="wcsfw-title">' . __( $field[ 'label' ], 'wash-care-symbols-for-woocommerce' ) . '</th>';
-					echo '<td class="wcsfw-symbols-container">';
-					foreach ( $choices as $choice ) {
-						echo '<button aria-label="' . __( $field[ 'choices' ][ $choice ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
-						echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
-						echo '</button>';
-					}
-					echo '</td></tr>';
-				}
+			foreach ( $values as $fieldkey => $options ) {
+                echo '<tr>';
+                echo '<th class="wcsfw-title">' . __( $this->values[$fieldkey][ 'label' ], 'wash-care-symbols-for-woocommerce' ) . '</th>';
+                echo '<td class="wcsfw-symbols-container">';
+                foreach ( $options as $option ) {
+                    echo '<button aria-label="' . __( $this->values[$fieldkey][ 'choices' ][ $option ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
+                    echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $option . '.png">';
+                    echo '</button>';
+                }
+                echo '</td></tr>';
 			}
 		}
 		echo '</tbody></table>';
@@ -358,21 +372,23 @@ class WashCareSymbolsForWooCommerce {
 	 * Display our icons below product short description
 	 */
 	public function below_short_desc_display() {
-		echo '<div class="wcsfw below-short-desc">';
-			echo '<ul>';
-			echo '<li class="wcsfw-symbols-container">';
-			foreach ( $this->values as $fieldkey => $field ) {
-				$choices = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
-				if ( $choices ) {
-					foreach ( $choices as $choice ) {
-						echo '<button aria-label="' . __( $field[ 'choices' ][ $choice ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
-						echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $choice . '.png">';
-						echo '</button>';
-					}
-				}
-			}
-			echo '</li></ul>';
-		echo '</div>';
+		$values = $this->get_product_values();
+        if ($values) {
+	        echo '<div class="wcsfw below-short-desc">';
+	        echo '<ul>';
+	        echo '<li class="wcsfw-symbols-container">';
+	        foreach ( $values as $fieldkey => $options ) {
+		        if ( $options ) {
+		            foreach ( $options as $option ) {
+				        echo '<button aria-label="' . __( $this->values[$fieldkey][ 'choices' ][ $option ], 'wash-care-symbols-for-woocommerce' ) . '"data-microtip-size="medium" data-microtip-position="top" role="tooltip" class="wcsfw-symbol-btn" >';
+				        echo '<img class="wcsfw-symbol-img" src="' . plugin_dir_url( __FILE__ ) . 'symbols/' . $option . '.png">';
+				        echo '</button>';
+			        }
+		        }
+	        }
+	        echo '</li></ul>';
+	        echo '</div>';
+        }
 	}
 
 	/**
@@ -394,6 +410,111 @@ class WashCareSymbolsForWooCommerce {
 		return $tabs;
 	}
 
+	public function product_cat_add_form_fields() {
+		?>
+        <div class="form-field">
+            <h3><?= __('Wash Care Symbols for WooCommerce', 'wash-care-symbols-for-woocommerce') ?></h3>
+        </div>
+        <div class="form-field">
+            <label for="wcsfw_use_at_cat_level"><?= __('Define wash/care symbols on category level?', 'wash-care-symbols-for-woocommerce') ?></label>
+            <input name="wcsfw_use_at_cat_level" id="wcsfw_use_at_cat_level" type="checkbox" value="1" />
+            <p class="description"><?= __('Check this to define wash/care symbols for whole product category. This settings can be overrided for each product.', 'wash-care-symbols-for-woocommerce') ?></p>
+        </div>
+		<?php
+		foreach ( $this->get_formatted_values() as $field ) {
+			$field[ 'name' ]  = $field[ 'name' ] ?? $field[ 'id' ];
+			?>
+            <div class="form-field wcsfw-cat-field <?= $field[ 'id' ] ?>">
+                <?php
+                printf( '<label for="%s">%s</label>', esc_attr( $field[ 'id' ] ), wp_kses_post( $field[ 'label' ] ) );
+                ?>
+                <?php
+                printf( '<select id="%s" name="%s" class="%s multiselect" multiple="multiple" style="width:calc(100%% - 25px);">',
+                        esc_attr( $field[ 'id' ] ), esc_attr( $field[ 'name' ] ), esc_attr( $field[ 'class' ] ) );
+
+                foreach ( $field[ 'options' ] as $key => $value ) {
+                    printf( '<option value="%s" >%s</option>',
+                            esc_attr( $key ), esc_html( $value ) );
+                }
+
+                echo '</select> ';
+                ?>
+            </div>
+			<?php
+		}
+	}
+
+	public function product_cat_edit_form_fields( $term, $taxonomy ) {
+		$use_at_cat_level = get_term_meta( $term->term_id, 'wcsfw_use_at_cat_level', true );
+        ?>
+        <tr class="form-field">
+            <td colspan="2" style="padding: 0;">
+                <h3><?= __('Wash Care Symbols for WooCommerce', 'wash-care-symbols-for-woocommerce') ?></h3>
+            </td>
+        </tr>
+            <tr class="form-field">
+                <th>
+                    <label for="wcsfw_use_at_cat_level"><?= __('Define wash/care symbols on category level?', 'wash-care-symbols-for-woocommerce') ?></label>
+                </th>
+                <td>
+                    <input name="wcsfw_use_at_cat_level" id="wcsfw_use_at_cat_level" type="checkbox" value="1" <?php checked( $use_at_cat_level, 1 ); ?> />
+                    <p class="description"><?= __('Check this to define wash/care symbols for whole product category. This settings can be overrided for each product.', 'wash-care-symbols-for-woocommerce') ?></p>
+                </td>
+            </tr>
+        <?php
+		foreach ( $this->get_formatted_values() as $field ) {
+			$field[ 'value' ] = $field[ 'value' ] ?? ( get_term_meta( $term->term_id, '_' . $field[ 'id' ], true ) ? get_term_meta( $term->term_id, '_' . $field[ 'id' ], true ) : array() );
+			$field[ 'name' ]  = $field[ 'name' ] ?? $field[ 'id' ];
+            ?>
+                <tr class="form-field wcsfw-cat-field <?= $field[ 'id' ] ?>">
+                    <th>
+                        <?php
+                        printf( '<label for="%s">%s</label>', esc_attr( $field[ 'id' ] ), wp_kses_post( $field[ 'label' ] ) );
+                        ?>
+                    </th>
+                    <td>
+                        <?php
+                        printf( '<select id="%s" name="%s" class="%s multiselect" multiple="multiple" style="width:calc(100%% - 25px);">',
+                                esc_attr( $field[ 'id' ] ), esc_attr( $field[ 'name' ] ), esc_attr( $field[ 'class' ] ) );
+
+                        foreach ( $field[ 'options' ] as $key => $value ) {
+	                        printf( '<option value="%s" %s>%s</option>',
+	                                esc_attr( $key ), in_array( $key, $field[ 'value' ] ) ? 'selected="selected"' : '', esc_html( $value ) );
+                        }
+
+                        echo '</select> ';
+                        ?>
+                    </td>
+                </tr>
+            <?php
+        }
+    }
+
+	public function is_product_category(  ): bool {
+		global $taxnow;
+        return isset( get_current_screen()->base) && get_current_screen()->base === 'term' && isset( $taxnow) && $taxnow === 'product_cat';
+    }
+
+	public function save_term_fields( $term_id ) {
+		update_term_meta(
+			$term_id,
+			'wcsfw_use_at_cat_level',
+			sanitize_key( $_POST[ 'wcsfw_use_at_cat_level' ] )
+		);
+
+		foreach ( $this->values as $fieldkey => $field ) {
+			if ( isset( $_POST[ '_' . $fieldkey ] ) && is_array( $_POST[ '_' . $fieldkey ] ) ) {
+				$clean_values = [];
+				foreach ( $_POST[ '_' . $fieldkey ] as $item ) {
+					$clean_values[] = sanitize_key( $item );
+				}
+				update_term_meta( $term_id, '_' . $fieldkey, $clean_values ?? null );
+			} else {
+				delete_term_meta( $term_id, '_' . $fieldkey );
+			}
+		}
+    }
+
 	/**
 	 * Add ability to use mutiselect selectWoo field
 	 *
@@ -403,10 +524,16 @@ class WashCareSymbolsForWooCommerce {
 		global $thepostid, $post;
 
 		$thepostid                = empty( $thepostid ) ? $post->ID : $thepostid;
-		$field[ 'class' ]         = isset( $field[ 'class' ] ) ? $field[ 'class' ] : 'select short';
-		$field[ 'wrapper_class' ] = isset( $field[ 'wrapper_class' ] ) ? $field[ 'wrapper_class' ] : '';
-		$field[ 'name' ]          = isset( $field[ 'name' ] ) ? $field[ 'name' ] : $field[ 'id' ];
-		$field[ 'value' ]         = isset( $field[ 'value' ] ) ? $field[ 'value' ] : ( get_post_meta( $thepostid, '_' . $field[ 'id' ], true ) ? get_post_meta( $thepostid, '_' . $field[ 'id' ], true ) : array() );
+		$field[ 'class' ]         = $field[ 'class' ] ?? 'select short';
+		$field[ 'wrapper_class' ] = $field[ 'wrapper_class' ] ?? '';
+		$field[ 'name' ]          = $field[ 'name' ] ?? $field[ 'id' ];
+		if ($this->is_product_category()){
+			$term_id = absint( $_GET['tag_ID'] );
+			$field[ 'value' ] = $field[ 'value' ] ?? ( get_term_meta( $term_id, '_' . $field[ 'id' ], true ) ? get_term_meta( $term_id, '_' . $field[ 'id' ], true ) : array() );
+		}
+        else {
+	        $field[ 'value' ] = $field[ 'value' ] ?? ( get_post_meta( $thepostid, '_' . $field[ 'id' ], true ) ? get_post_meta( $thepostid, '_' . $field[ 'id' ], true ) : array() );
+        }
 
 		printf( '<p class="form-field %s_field %s">',
 		        esc_attr( $field[ 'id' ] ),
@@ -582,6 +709,68 @@ class WashCareSymbolsForWooCommerce {
 		}
 
 		return $options[ 'icon_size' ];
+	}
+
+	/**
+	 * @param $hook
+	 *
+	 * @return bool
+	 */
+	public function is_product_edit_page( $hook ): bool {
+        if (!isset( $hook ) || empty( get_current_screen()->post_type )){
+            return false;
+        }
+		return 'post.php' === $hook && get_current_screen()->post_type === 'product';
+	}
+
+	/**
+	 * @param $hook
+	 *
+	 * @return bool
+	 */
+	public function is_product_cat_edit_page( $hook ): bool {
+		if (!isset( $hook ) || empty( get_current_screen()->taxonomy )){
+			return false;
+		}
+		return ('term.php' === $hook || 'edit-tags.php' === $hook) && get_current_screen()->taxonomy === 'product_cat';
+	}
+
+	/**
+     * Get product values or product category values if empty
+     *
+	 * @return array|false
+	 */
+	public function get_product_values() {
+		$values = [];
+		foreach ( $this->values as $fieldkey => $field ) {
+            $option = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
+            if($option){
+			    $values[$fieldkey] = get_post_meta( get_the_ID(), '_' . $fieldkey, true );
+            }
+		}
+        if( !empty($values) ){
+	        return $values;
+        }
+        // get product category values if empty
+        else {
+            $product_cat_ids = wc_get_product_term_ids(get_the_ID(), 'product_cat');
+            $empty = true;
+	        foreach ( $product_cat_ids as $product_cat_id ) {
+                if (get_term_meta( $product_cat_id, 'wcsfw_use_at_cat_level', true ) == 1) {
+	                foreach ( $this->values as $fieldkey => $field ) {
+		                $option = get_term_meta( $product_cat_id, '_' . $fieldkey, true );
+		                if ( $option ) {
+			                $empty               = false;
+			                $values[ $fieldkey ] = $option;
+		                }
+	                }
+	                if ( ! $empty ) {
+		                return $values;
+	                }
+                }
+	        }
+        }
+        return false;
 	}
 
 }
