@@ -1,9 +1,9 @@
 === Wash Care Symbols for WooCommerce ===
 Contributors: charlieetienne
 Tags: woocommerce, wash, care, symbols, clothes
-Stable tag: 3.0.0
+Stable tag: 3.1.0
 Requires at least: 5.2
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -129,8 +129,33 @@ Go to Settings > Wash Care Symbols for WooCommerce.
 == Hooks ==
 
 * `wcsfw_display` (action): allows you to use your own display hook
-* `wcsfw-data` (filter): allows you modify symbols data and texts
+* `wcsfw-data` (filter): allows you to modify symbols data and texts
 * `wcsfw_below_short_desc_priority` (filter): allows you to change hook priority if symbols doesn't appear in the right place when using *below short description* setting
+* `wcsfw_custom_tab_priority` (filter): allows you to change tabs order when using *custom tab* layout
+
+== How to Customize ==
+
+**Remove hooks**
+
+In order to remove hooks used by this plugin, you'll need to get plugin instance and pass it in an array inside the callback argument.
+For example:
+
+~~~php
+$wcsfwc = WashCareSymbolsForWooCommerce::get_instance();
+remove_action( 'woocommerce_single_product_summary', [ $wcsfwc, 'below_short_desc_display' ], apply_filters( 'wcsfw_below_short_desc_priority', 21 ) );
+remove_action( 'woocommerce_product_additional_information', [ $wcsfwc, 'additional_info_display' ] );
+~~~
+
+**Display wherever you want**
+
+Here is what you'll need to use a custom hook to display instructions wherever you want on your product page:
+
+~~~php
+add_action('whatever_hook_you_want', function(){
+    $wcsfwc = WashCareSymbolsForWooCommerce::get_instance();
+    $wcsfwc->additional_info_display();
+});
+~~~
 
 = Resources =
 
@@ -158,6 +183,10 @@ Sure, go ahead! It is completely open source.
 2. Product edit in administration
 
 == Changelog ==
+
+= 3.1.0 =
+* **We can now display wash/care symbols in a custom tab!** Just go in settings and set position to "In custom tab"
+* A new hook has been added: `wcsfw_custom_tab_priority`. It allows you to change tabs order.
 
 = 3.0.0 =
 * **We can now choose wash/care symbols on category level!** This setting can be overrided in each individual product.

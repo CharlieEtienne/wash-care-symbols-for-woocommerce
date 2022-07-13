@@ -2,7 +2,7 @@
 /**
  * Plugin Name:             Wash Care Symbols for WooCommerce
  * Description:             Display wash/care symbols in WooCommerce products
- * Version:                 3.0.0
+ * Version:                 3.1.0
  * Requires at least:       5.2
  * Requires PHP:            7.2
  * WC requires at least:    4.0
@@ -301,10 +301,38 @@ class WashCareSymbolsForWooCommerce {
             $priority = apply_filters( 'wcsfw_below_short_desc_priority', 21 );
 			add_action( 'woocommerce_single_product_summary', [ $this, 'below_short_desc_display' ], $priority );
 		}
+		elseif( $position === 'custom_tab' ){
+			add_filter( 'woocommerce_product_tabs', [$this, 'add_custom_tab'] );
+		}
         else {
 	        add_action( 'woocommerce_product_additional_information', [ $this, 'additional_info_display' ] );
         }
     }
+
+	/**
+	 * Display instructions in a custom tab
+	 *
+	 * @param array $tabs
+	 * @return array
+	 *
+	 * @since 3.1.0
+	 */
+	public function add_custom_tab( $tabs ): array {
+		/**
+		 * Hook wcsfw_custom_tab_priority
+		 * Allows to change tab order when using custom tab layout
+		 * Default to 21 to have it just after Additionnal Information tab
+		 * @since 3.1.0
+		 */
+		$priority = apply_filters( 'wcsfw_custom_tab_priority', 21 );
+
+		$tabs[ '_care_instructions_tab' ] = [
+			'title'    => __( 'Wash / Care', 'wash-care-symbols-for-woocommerce' ),
+			'priority' => $priority,
+			'callback' => [$this, 'additional_info_display']
+		];
+		return $tabs;
+	}
 
 	/**
 	 * Display our icons in Additional Information tab
@@ -672,6 +700,12 @@ class WashCareSymbolsForWooCommerce {
                                       value="below_short_desc" <?php checked( 'below_short_desc', $position ); ?>>
 			<?php _e( 'Below short description', 'wash-care-symbols-for-woocommerce' ); ?>
         </label>
+		<label for="custom_tab"> <input type="radio"
+		                                      name="wcsfw_options[position]"
+		                                      id="custom_tab"
+		                                      value="custom_tab" <?php checked( 'custom_tab', $position ); ?>>
+			<?php _e( 'In custom tab', 'wash-care-symbols-for-woocommerce' ); ?>
+		</label>
 		<?php
 	}
 
