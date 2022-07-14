@@ -1,7 +1,7 @@
 === Wash Care Symbols for WooCommerce ===
 Contributors: charlieetienne
 Tags: woocommerce, wash, care, symbols, clothes
-Stable tag: 3.1.0
+Stable tag: 4.0.0
 Requires at least: 5.2
 Tested up to: 6.0
 Requires PHP: 7.2
@@ -122,9 +122,39 @@ For now, these choices are available:
 
 Go to Settings > Wash Care Symbols for WooCommerce.
 
-* **Position:** Inside "Additional Information"(default) / below short description (added in 2.4).
+* **Position:** Inside "Additional Information"(default) / below short description (added in 2.4) / In custom tab (added in 3.1).
 * **Layout:** Horizontal/Vertical/Minimal (added in 2.2).
 * **Icons size** (added in 2.7).
+
+== Shortcode ==
+
+If for some reason, you don't want to use WooCommerce Product data tabs, you can display wash/care instructions wherever you want with the `[wcsfwc]` shortcode.
+
+In a product page, just do:
+
+~~~php
+[wcsfwc]
+~~~
+
+It will use current product and the layout you defined in Settings.
+
+If you want to override layout, add a "layout" argument (available values are "minimal", "vertical", "horizontal"):
+
+~~~php
+[wcsfwc layout="minimal"]
+~~~
+
+If you want to display the wash/care instructions outside a product page, or for another product, use "product" argument:
+
+~~~php
+[wcsfwc product="123"]
+~~~
+
+In a .php file, use the `do_shortcode` function:
+
+~~~php
+<?php echo do_shortcode( '[wcsfwc]' ); ?>
+~~~
 
 == Hooks ==
 
@@ -141,7 +171,7 @@ In order to remove hooks used by this plugin, you'll need to get plugin instance
 For example:
 
 ~~~php
-$wcsfwc = WashCareSymbolsForWooCommerce::get_instance();
+$wcsfwc = WCSFWC\WashCareSymbolsForWooCommerce::get_instance();
 remove_action( 'woocommerce_single_product_summary', [ $wcsfwc, 'below_short_desc_display' ], apply_filters( 'wcsfw_below_short_desc_priority', 21 ) );
 remove_action( 'woocommerce_product_additional_information', [ $wcsfwc, 'additional_info_display' ] );
 ~~~
@@ -152,7 +182,7 @@ Here is what you'll need to use a custom hook to display instructions wherever y
 
 ~~~php
 add_action('whatever_hook_you_want', function(){
-    $wcsfwc = WashCareSymbolsForWooCommerce::get_instance();
+    $wcsfwc = WCSFWC\WashCareSymbolsForWooCommerce::get_instance();
     $wcsfwc->additional_info_display();
 });
 ~~~
@@ -176,6 +206,13 @@ Yes.
 
 = Can I use this plugin for commercial purposes? =
 Sure, go ahead! It is completely open source.
+If you like my work, you can donate here: [https://paypal.me/webnancy](https://paypal.me/webnancy)
+
+= Is it compatible with Elementor Page Builder? =
+Yes.
+
+= How can I say thank you? =
+If you like my work, you can donate here: [https://paypal.me/webnancy](https://paypal.me/webnancy)
 
 == Screenshots ==
 
@@ -183,6 +220,10 @@ Sure, go ahead! It is completely open source.
 2. Product edit in administration
 
 == Changelog ==
+
+= 4.0.0 =
+* Major update, with rewrite of most of plugin's code. 
+* **We can now display wash/care symbols with the `[wcsfwc]` shortcode!** See the Shortcode section of the docs for more details.
 
 = 3.1.0 =
 * **We can now display wash/care symbols in a custom tab!** Just go in settings and set position to "In custom tab"
