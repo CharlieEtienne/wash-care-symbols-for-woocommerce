@@ -140,21 +140,21 @@ It will use current product and the layout you defined in Settings.
 
 If you want to override layout, add a "layout" argument (available values are "minimal", "vertical", "horizontal"):
 
-~~~php
+`
 [wcsfwc layout="minimal"]
-~~~
+`
 
 If you want to display the wash/care instructions outside a product page, or for another product, use "product" argument:
 
-~~~php
+`
 [wcsfwc product="123"]
-~~~
+`
 
 In a .php file, use the `do_shortcode` function:
 
-~~~php
-<?php echo do_shortcode( '[wcsfwc]' ); ?>
-~~~
+`
+echo do_shortcode( '[wcsfwc]' );
+`
 
 == Hooks ==
 
