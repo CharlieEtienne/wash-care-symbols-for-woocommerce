@@ -134,7 +134,7 @@ class Fields {
 		}
 	}
 
-	public function save_term( $term_id ) {
+	public static function save_term( $term_id ) {
 		update_term_meta(
 			$term_id,
 			'wcsfw_use_at_cat_level',
