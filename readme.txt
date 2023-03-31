@@ -1,9 +1,9 @@
 === Wash Care Symbols for WooCommerce ===
 Contributors: charlieetienne
 Tags: woocommerce, wash, care, symbols, clothes
-Stable tag: 4.0.0
+Stable tag: 4.1.0
 Requires at least: 5.2
-Tested up to: 6.0
+Tested up to: 6.1
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -220,6 +220,11 @@ If you like my work, you can donate here: [https://paypal.me/webnancy](https://p
 2. Product edit in administration
 
 == Changelog ==
+
+= 4.1.0 =
+* [FIX] Fix tooltip overlap in some cases
+* [FIX] Fix tooltip being hidden in elementor in some cases
+* [FIX] Make method static (https://wordpress.org/support/topic/wordpress-backend-throws-error-on-wash-care-plugin-category-level-enabling/)
 
 = 4.0.0 =
 * Major update, with rewrite of most of plugin's code. 
