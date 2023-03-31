@@ -53,6 +53,7 @@
     padding: .5em 1em;
     white-space: nowrap;
     box-sizing: content-box;
+    display:block;
 }
 
 [aria-label][role~="tooltip"]:hover::before,
