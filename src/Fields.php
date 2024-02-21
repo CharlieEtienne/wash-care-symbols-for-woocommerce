@@ -9,17 +9,20 @@ class Fields {
 	 * @param $post_id
 	 */
 	public static function save( $post_id ) {
+        $product = wc_get_product( $post_id );
+
 		foreach ( Values::get() as $fieldkey => $field ) {
 			if ( isset( $_POST[ '_' . $fieldkey ] ) && is_array( $_POST[ '_' . $fieldkey ] ) ) {
 				$clean_values = [];
 				foreach ( $_POST[ '_' . $fieldkey ] as $item ) {
 					$clean_values[] = sanitize_key( $item );
 				}
-				update_post_meta( $post_id, '_' . $fieldkey, $clean_values ?? null );
-			} else {
-				delete_post_meta( $post_id, '_' . $fieldkey );
-			}
-		}
+                $product->update_meta_data('_' . $fieldkey, $clean_values ?? null);
+            } else {
+                $product->delete_meta_data( '_' . $fieldkey );
+            }
+            $product->save();
+        }
 	}
 
 	/**

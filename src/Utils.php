@@ -11,8 +11,9 @@ class Utils {
 	public static function multiple_select( $field ) {
 		global $thepostid, $post;
 
-		$thepostid                = empty( $thepostid ) ? $post->ID : $thepostid;
-		$field[ 'class' ]         = $field[ 'class' ] ?? 'select short';
+        $thepostid                = empty( $thepostid ) ? $post->ID : $thepostid;
+        $product                  = wc_get_product( $thepostid );
+        $field[ 'class' ]         = $field[ 'class' ] ?? 'select short';
 		$field[ 'wrapper_class' ] = $field[ 'wrapper_class' ] ?? '';
 		$field[ 'name' ]          = $field[ 'name' ] ?? $field[ 'id' ];
 		if (self::is_product_category()){
@@ -20,7 +21,8 @@ class Utils {
 			$field[ 'value' ] = $field[ 'value' ] ?? ( get_term_meta( $term_id, '_' . $field[ 'id' ], true ) ? get_term_meta( $term_id, '_' . $field[ 'id' ], true ) : array() );
 		}
 		else {
-			$field[ 'value' ] = $field[ 'value' ] ?? ( get_post_meta( $thepostid, '_' . $field[ 'id' ], true ) ? get_post_meta( $thepostid, '_' . $field[ 'id' ], true ) : array() );
+            $product_meta = $product->get_meta('_' . $field['id']);
+            $field[ 'value' ] = $field[ 'value' ] ?? ( $product_meta ? $product_meta : array() );
 		}
 
 		printf( '<p class="form-field %s_field %s">',

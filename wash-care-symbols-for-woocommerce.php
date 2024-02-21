@@ -2,11 +2,11 @@
 /**
  * Plugin Name:             Wash Care Symbols for WooCommerce
  * Description:             Display wash/care symbols in WooCommerce products
- * Version:                 4.1.0
+ * Version:                 4.2.0
  * Requires at least:       5.2
  * Requires PHP:            7.2
  * WC requires at least:    4.0
- * WC tested up to:         7.5
+ * WC tested up to:         8.6
  * Author:                  Charlie Etienne
  * Author URI:              https://web-nancy.fr
  * License:                 GPL v2 or later
@@ -245,11 +245,12 @@ class WashCareSymbolsForWooCommerce {
 	 */
 	public function get_product_values( int $product = null) {
 		if( empty($product) ) {$product = get_the_ID();}
+        $product_obj = wc_get_product($product);
 		$values = [];
 		foreach ( $this->values as $fieldkey => $field ) {
-            $option = get_post_meta( $product, '_' . $fieldkey, true );
+            $option = $product_obj->get_meta('_' . $fieldkey);
             if($option){
-			    $values[$fieldkey] = get_post_meta( $product, '_' . $fieldkey, true );
+			    $values[$fieldkey] = $product_obj->get_meta('_' . $fieldkey);
             }
 		}
         if( !empty($values) ){
@@ -280,3 +281,9 @@ class WashCareSymbolsForWooCommerce {
 }
 
 WashCareSymbolsForWooCommerce::get_instance()->init();
+
+add_action( 'before_woocommerce_init', function() {
+    if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+    }
+} );
